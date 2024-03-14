@@ -1843,14 +1843,14 @@ def find_meaning(message):
                 key = str([list(paronyms[i]) for i in paronyms].index(gr) + 1)
                 meaning = []
                 if len(paronyms[key][text.capitalize()]) == 1:
-                    paronyms[key][text.capitalize()][0][0] = "Значение:\n" + paronyms[key][text.capitalize()][0][0]
-                    paronyms[key][text.capitalize()][0][1] = "Пример:\n" + paronyms[key][text.capitalize()][0][1]
-                    meaning.append("\n".join(paronyms[key][text.capitalize()][0]))
+                    mean = "Значение:\n" + paronyms[key][text.capitalize()][0][0]
+                    ex = "Пример:\n" + paronyms[key][text.capitalize()][0][1]
+                    meaning.append(mean + "\n" + ex)
                 else:
                     for i in paronyms[key][text.capitalize()]:
-                        i[0] = "Значение № " + str(paronyms[key][text.capitalize()].index(i) + 1) + ":\n" + i[0]
-                        i[1] = "Пример:\n" + i[1]
-                        meaning.append("\n".join(i))
+                        mean = "Значение № " + str(paronyms[key][text.capitalize()].index(i) + 1) + ":\n" + i[0]
+                        ex = "Пример:\n" + i[1]
+                        meaning.append(mean + "\n" + ex)
                 answer = bot.send_message(chat_id, '\n'.join(meaning))
     elif text.capitalize() == "Отмена":
       answer = bot.send_message(chat_id, "Действие отменено.")
