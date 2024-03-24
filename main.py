@@ -1799,24 +1799,8 @@ def help_command(message):
 # Функция команды "Список паронимов со значениями и примерами"
 @bot.message_handler(commands=['all_paronyms_meaning'])
 def all_paronyms_meaning_command(message):
-  answer = []
-  for gr in paronyms:
-    answer.append("Группа № " + gr + ":")
-    for par in paronyms[gr]:
-      answer.append(par)
-      count = 1
-      for mean in paronyms[gr][par]:
-        if len(paronyms[gr][par]) == 1: 
-          answer.append("Значение:\n" + mean[0])
-        else:
-          answer.append("Значение № " + str(count) + ":\n" + mean[0])
-        answer.append("Пример:\n" + mean[1])
-        count += 1
-    if int(gr) % 4 == 0: #Отправляется по 4 группы паронимов, чтобы обойти ограничения телеграмма о кол-ве сообщений и их размера(иначе никак)
-      bot.reply_to(message, "\n".join(answer))
-      answer = []
-    if int(gr) == 143: #143 % 4 == 3, значит 3 последние группы отправить придется вручную
-      bot.reply_to(message, "\n".join(answer))
+  bot.reply_to(message, "Пройдите по ссылке: https://telegra.ph/Paronimy-EGEH---znachenie-i-primery-03-24" + 
+               "\nЭто ссылка на сайт со всеми паронимами, их значениями и примерами употребления.")
       
 # Функция команды "Список паронимов по группам"
 @bot.message_handler(commands=['paronyms_list'])
