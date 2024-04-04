@@ -6,7 +6,6 @@ import telebot
 import random
 import time 
 import requests
-import json
 global right_par
 global all_test_key
 global test_key
@@ -21,8 +20,11 @@ commands = ["/start - Приветствие и краткое описание 
             "/random_paronym_test - Тест на знание случайного паронима.", #СДЕЛАНО
             "/all_paronyms_test - Тест на знание всех паронимов из списка.", #СДЕЛАНО
             "/paronyms_list - Список паронимов по группам.", #СДЕЛАНО
-            "/all_paronyms_meaning - Список всех паронимов с их значениями и примерами.", #СДЕЛАНО, 
-            "/paronym_meaning - Найти значение конкретного паронима."] #СДЕЛАНО
+            "/all_paronyms_meaning - Список всех паронимов с их значениями и примерами.", #СДЕЛАНО
+            "/paronym_meaning - Найти значение конкретного паронима.", #СДЕЛАНО
+            "/random_group_meaning - Значения случайной группы паронимов, примеры их употребления."] #СДЕЛАНО
+
+#команда для сбора информации об ошибках
 
 # Знаю, что надо было сделать json, но у меня не получилось сделать его в таком формате.
 # Еще буду править значения и примеры
@@ -1806,6 +1808,24 @@ def all_paronyms_meaning_command(message):
 @bot.message_handler(commands=['paronyms_list'])
 def paronims_list_command(message):
   bot.reply_to(message, "\n".join([" - ".join(list(paronyms[i])) for i in paronyms]))
+
+# Функция команды "Значение случайной группы паронимов с примерами"
+@bot.message_handler(commands=['random_group_meaning'])
+def random_group_meaning_command(message):
+  random_group_num = random.choice(list(paronyms.keys()))
+  answer = []
+  answer.append("Группа № " + random_group_num + ":")
+  for par in paronyms[random_group_num]:
+    answer.append(par)
+    count = 1
+    for mean in paronyms[random_group_num][par]:
+      if len(paronyms[random_group_num][par]) == 1: 
+        answer.append("Значение:\n" + mean[0])
+      else:
+        answer.append("Значение № " + str(count) + ":\n" + mean[0])
+        answer.append("Пример:\n" + mean[1])
+        count += 1
+  bot.reply_to(message, "\n".join(answer))
 
 # Функция команды "Значение паронима"
 @bot.message_handler(commands=['paronym_meaning'])
